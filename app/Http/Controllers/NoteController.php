@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
@@ -14,7 +15,8 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $notes=DB::select('select * from notes');
+        return view('index', compact('notes'));
     }
 
     /**
@@ -35,7 +37,13 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            DB::insert('insert into notes (titulo, descripcion) values (?,?)',[$request->input('titulo'),$request->input('descripcion')]);
+            return response()->json(array('resultado'=> 'OK'));
+        }catch (\Throwable $th) {
+            return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
+        }
+        //return redirect()->route('clientes.index');
     }
 
     /**
@@ -80,6 +88,12 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        try {
+            DB::delete('delete from notes where id=?',[$note->id]);
+            //return redirect()->route('clientes.index');
+            return response()->json(array('resultado'=> 'OK'));
+        } catch (\Throwable $th) {
+            return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
+        }
     }
 }

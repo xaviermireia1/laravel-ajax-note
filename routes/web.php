@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\NoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* Display a listing of the resource. */
+//Vista
+Route::get('/notes',[NoteController::class,'index'])->name('index');
+
+//Crear
+Route::post('/notes',[NoteController::class,'store'])->name('notes.store');
+//Eliminar
+Route::get('/notes/{note}',[NoteController::class,'destroy'])->name('notes.destroy');
