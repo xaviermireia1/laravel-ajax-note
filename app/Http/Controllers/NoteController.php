@@ -96,4 +96,10 @@ class NoteController extends Controller
             return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
         }
     }
+    public function shows(Request $request)
+    {
+        $clientes=DB::select('select * from notes where titulo like ?',['%'.$request->input('titulo').'%']);
+        // return view('clientes.index', compact('clientes'));
+        return response()->json($clientes);
+    }
 }

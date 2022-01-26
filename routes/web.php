@@ -15,9 +15,9 @@ use App\Http\Controllers\NoteController;
 
 /* Display a listing of the resource. */
 //Vista
-Route::get('/notes',[NoteController::class,'index'])->name('index');
-
+Route::get('/notes',[NoteController::class,'index'])->name('notes.index');
+Route::post('/notes/shows',[NoteController::class,'shows'])->name('notes.shows');
 //Crear
 Route::post('/notes',[NoteController::class,'store'])->name('notes.store');
 //Eliminar
-Route::get('/notes/{note}',[NoteController::class,'destroy'])->name('notes.destroy');
+Route::delete('/notes/{note}',[NoteController::class,'destroy'])->name('notes.destroy');

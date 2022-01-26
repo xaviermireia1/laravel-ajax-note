@@ -7,15 +7,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="js/ajax.js"></script>
     <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="../public/css/style.css">
     <title>Laravel notes</title>
 </head>
-
 <body>
     <center>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Numero de nota</h2>
+                    <form id="formUpdate" method="post" onsubmit="actualizar();">
+                        <span>titulo</span>
+                        <input type="text" name="titulo" id="tituloUpdate">
+                        <span>descripcion</span>
+                        <input type="text" name="descripcion" id="descripcionUpdate">
+                        <input type="submit" value="Editar">
+                        <input type="hidden" name="id" id="idUpdate">
+                    </form>
+                </div>
+
+            </div>
         <br><br><br>
         <div>
             <div>
-                <form method="post" onsubmit="crear();return false;">
+                <form id="formcrear" method="post" onsubmit="crear();return false;">
                     <span>Titulo</span>
                     <input type="text" name="titulo" id="titulo">
                     <span>Descripción</span>
@@ -30,9 +45,12 @@
         </div>
         <br><br><br>
         <div>
-            <form method="post">
-                <input type="search" name="filtro" id="filtro" placeholder="Buscar por titulo">
-            </form>
+            <form method="post" onsubmit="return false;">
+                <input type="hidden" name="_method" value="POST" id="postFiltro">
+                <div class="form-outline">
+                   <input type="search" id="search" name="titulo" class="form-control" placeholder="Buscar por titulo..." aria-label="Search" onkeyup="filtro(); return false;"/>
+                </div>
+             </form>
         </div>
         <div>
             <table class="table" id="table">
@@ -49,10 +67,7 @@
                     <td>{{$note->descripcion}}</td>
                     <td>
                         {{-- Route::get('/clientes/{cliente}/edit',[ClienteController::class,'edit'])->name('clientes.edit'); --}}
-                        <form method="post">
-                            <input type="hidden" name="_method" value="GET">
-                            <button class= "btn btn-secondary" type="submit" value="Edit">Editar</button>
-                        </form>
+                        <button class= "btn btn-secondary" type="submit" value="Edit" onclick="modalbox({{$note->id}},'{{$note->titulo}}','{{$note->descripcion}}');return false;">Editar</button>
                     </td>
                     <td>
                         {{-- Route::delete('/clientes/{cliente}',[ClienteController::class,'destroy'])->name('clientes.destroy'); --}}
@@ -68,6 +83,32 @@
             </table>
         </div>
     </center>
+    <script>
+                /*FI*/
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        function modalbox(id,titulo,descripcion){
+            modal.style.display = "block";
+            document.getElementById('tituloUpdate').value = titulo;
+            document.getElementById('descripcionUpdate').value = descripcion;
+            document.getElementById('idUpdate').value = id;
+        }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
