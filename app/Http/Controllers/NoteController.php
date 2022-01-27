@@ -75,9 +75,14 @@ class NoteController extends Controller
      * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request)
     {
-        //
+        try {
+            DB::update('update notes set titulo=?, descripcion=? where id=?',[$request->input('titulo'),$request->input('descripcion'),$request->input('id')]);
+            return response()->json(array('resultado'=> 'OK'));
+        } catch (\Throwable $th) {
+                return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
+        }
     }
 
     /**

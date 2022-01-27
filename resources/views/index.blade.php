@@ -15,8 +15,9 @@
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <h2>Numero de nota</h2>
-                    <form id="formUpdate" method="post" onsubmit="actualizar();">
+                    <form id="formUpdate" method="post" onsubmit="actualizar();closeModal();;return false;">
+                        <h2 id="tituloNota"></h2>
+                        <input type="hidden" name="_method" value="PUT" id="modifNote">
                         <span>titulo</span>
                         <input type="text" name="titulo" id="tituloUpdate">
                         <span>descripcion</span>
@@ -25,7 +26,6 @@
                         <input type="hidden" name="id" id="idUpdate">
                     </form>
                 </div>
-
             </div>
         <br><br><br>
         <div>
@@ -36,10 +36,10 @@
                     <span>Descripción</span>
                     <input type="text" name="descripcion" id="descripcion">
                     <input type="hidden" name="_method" value="POST" id="createNote">
-                    <input type="submit" value="Crear">
+                    <input class="btn btn-success" type="submit" value="Crear">
                 </form>
                 <br>
-                <div id="message"></div>
+                <div id="message" style="color:green"></div>
             </div>
         </div>
         </div>
@@ -93,19 +93,23 @@
         // When the user clicks the button, open the modal 
         function modalbox(id,titulo,descripcion){
             modal.style.display = "block";
+            document.getElementById('tituloNota').innerHTML = "Nota #"+id;
             document.getElementById('tituloUpdate').value = titulo;
             document.getElementById('descripcionUpdate').value = descripcion;
             document.getElementById('idUpdate').value = id;
         }
+        function closeModal(){
+            modal.style.display = "none";
+        }
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
-            modal.style.display = "none";
+            closeModal();
         }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
-                modal.style.display = "none";
+                closeModal();
             }
         }
     </script>

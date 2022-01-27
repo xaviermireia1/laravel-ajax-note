@@ -19,5 +19,7 @@ Route::get('/notes',[NoteController::class,'index'])->name('notes.index');
 Route::post('/notes/shows',[NoteController::class,'shows'])->name('notes.shows');
 //Crear
 Route::post('/notes',[NoteController::class,'store'])->name('notes.store');
+//Actualizar
+Route::put('/notes',[NoteController::class,'update'])->name('notes.update');
 //Eliminar
 Route::delete('/notes/{note}',[NoteController::class,'destroy'])->name('notes.destroy');

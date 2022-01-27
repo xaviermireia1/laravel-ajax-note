@@ -55,7 +55,7 @@ function filtro() {
                 recarga += '<tr>';
                 recarga += '<th scope="col">#</th>';
                 recarga += '<th scope="col">Nombre</th>';
-                recarga += '<th scope="col">Ocupación</th>';
+                recarga += '<th scope="col">Descripcion</th>';
                 recarga += '<th scope="col" colspan="2">Acciones</th>';
                 recarga += '</tr>';
                 for (let i = 0; i < respuesta.length; i++) {
@@ -65,7 +65,7 @@ function filtro() {
                     recarga += '<td>' + respuesta[i].descripcion + '</td>';
                     recarga += '<td>';
                     // editar
-                    recarga += '<button class="btn btn-secondary" type="submit" value="Edit" onclick="modalbox(' + respuesta[i].id + ',"' + respuesta[i].titulo + '","' + respuesta[i].descripcion + '");return false;>Editar</button>';
+                    recarga += '<button class="btn btn-secondary" type="submit" value="Edit" onclick="modalbox(' + respuesta[i].id + ',\'' + respuesta[i].titulo + '\',\'' + respuesta[i].descripcion + '\');return false;">Editar</button>';
                     recarga += '</td>';
                     recarga += '<td>';
                     // eliminar
@@ -201,7 +201,7 @@ function actualizar() {
     */
     var token = document.getElementById('token').getAttribute("content");
     var method = document.getElementById('modifNote').value;
-    var formData = new FormData(document.getElementById('formmodif'));
+    var formData = new FormData(document.getElementById('formUpdate'));
     formData.append('_token', token);
     formData.append('_method', method);
     /* Inicializar un objeto AJAX */
@@ -212,7 +212,7 @@ function actualizar() {
     POST -> Sí envía parámetros
     true -> asynchronous
     */
-    ajax.open("POST", "notes/" + note_id, true);
+    ajax.open("POST", "notes", true);
     ajax.onreadystatechange = function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 var respuesta = JSON.parse(this.responseText);
