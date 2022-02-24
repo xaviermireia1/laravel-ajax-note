@@ -15,7 +15,7 @@
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <form id="formUpdate" method="post" onsubmit="actualizar();closeModal();;return false;">
+                    <form id="formUpdate" method="post" onsubmit="actualizar();closeModal();return false;">
                         <h2 id="tituloNota"></h2>
                         <input type="hidden" name="_method" value="PUT" id="modifNote">
                         <span>titulo</span>
